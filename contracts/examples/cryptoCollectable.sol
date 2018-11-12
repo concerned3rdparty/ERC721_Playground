@@ -6,6 +6,7 @@ import "../helper/util/SafeMath.sol";
 
 contract Collectable is ERC721 {
 
+
   using SafeMath for uint256;
 
   mapping (uint => address) collectableApprovals;
