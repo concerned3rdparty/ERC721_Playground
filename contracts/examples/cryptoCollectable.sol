@@ -8,6 +8,8 @@ contract Collectable is ERC721 {
 
 
   using SafeMath for uint256;
+  using SafeMath for uint32;
+  using SafeMath16 for uint16;
 
   mapping (uint => address) collectableApprovals;
 
