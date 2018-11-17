@@ -10,6 +10,13 @@ contract Collectable is ERC721 {
   using SafeMath for uint256;
   using SafeMath for uint32;
   using SafeMath16 for uint16;
+  using AddressUtils for address;
+
+  // Mapping from token ID to owner
+  mapping (uint256 => address) internal tokenOwner;
+
+  // Optional mapping for token URIs keeping data about token
+  mapping(uint256 => string) internal tokenURIs;
 
   mapping (uint => address) collectableApprovals;
 
@@ -17,8 +24,11 @@ contract Collectable is ERC721 {
     //return ownerCollectableCount state
   }
 
+  //return owner of the collectable
   function ownerOf(uint256 _tokenId) public view returns (address _owner) {
-    //return owner of the collectable
+    address owner = tokenOwner[_tokenId];
+    require(owner != address(0));
+    return owner;
   }
 
   function _transfer(address _from, address _to, uint256 _tokenId) private {
@@ -40,5 +50,20 @@ contract Collectable is ERC721 {
     address owner = ownerOf(_tokenId);
     _transfer(owner, msg.sender, _tokenId);
   }
+
+  /**
+ * @dev Returns whether the specified token exists
+ * @param _tokenId uint256 ID of the token to query the existence of
+ * @return whether the token exists
+ */
+function exists(uint256 _tokenId) public view returns (bool) {
+  address owner = tokenOwner[_tokenId];
+  return owner != address(0);
+}
+
+function tokenURI(uint257 _tokenId) public view returns (string){
+  require(exists(_tokenId));
+  return tokenURIs[_tokenId];
+}
 
 }
