@@ -12,8 +12,14 @@ contract Collectable is ERC721 {
   using SafeMath16 for uint16;
   using AddressUtils for address;
 
+  // Total amount of tokens
+  uint256 private totalTokens;
+
   // Mapping from token ID to owner
   mapping (uint256 => address) internal tokenOwner;
+
+  // Mapping from owner to list of owned token IDs
+  mapping (address => uint256[]) private ownedTokens;
 
   // Optional mapping for token URIs keeping data about token
   mapping(uint256 => string) internal tokenURIs;
@@ -66,4 +72,27 @@ function tokenURI(uint257 _tokenId) public view returns (string){
   return tokenURIs[_tokenId];
 }
 
+/**
+* @dev Mint token function
+* @param _to The address that will own the minted token
+* @param _tokenId uint256 ID of the token to be minted by the msg.sender
+*/
+function _mint(address _to, uint256 _tokenId) internal {
+  require(_to != address(0));
+  addToken(_to, _tokenId);
+  emit Transfer(0x0, _to, _tokenId);
 }
+
+
+/**
+ * @dev Internal function to add a token ID to the list of a given address
+ * @param _to address representing the new owner of the given token ID
+ * @param _tokenId uint256 ID of the token to be added to the tokens list of the given address
+ */
+ function addToken(address _to, uint256 _tokenId) private {
+   require(tokenOwner[_tokenId] == address(0));
+   tokenOwner[_tokenId] = _to;
+   uint256 length = balanceOf(_to);
+   ownedTokens[_to].push(_tokenId);
+   totalTokens = totalTokens.add(1);
+ }
