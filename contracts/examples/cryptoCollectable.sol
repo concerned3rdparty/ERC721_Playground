@@ -19,7 +19,9 @@ contract Collectable is ERC721 {
   mapping (uint256 => address) internal tokenOwner;
 
   // Mapping from owner to list of owned token IDs
-  mapping (address => uint256[]) private ownedTokens;
+  // //todo change to map of map
+  //mapping (address => uint256[]) private ownedTokens;
+  mapping (address =>mapping(uint256 => bool)) private ownedTokens;
 
   // Optional mapping for token URIs keeping data about token
   mapping(uint256 => string) internal tokenURIs;
@@ -83,6 +85,23 @@ function _mint(address _to, uint256 _tokenId) internal {
   emit Transfer(0x0, _to, _tokenId);
 }
 
+/**
+* @notice Mapping in mapping is not tested 
+* @dev Internal function to remove a token ID from the list of a given address
+* @param _from address representing the previous owner of the given token ID
+* @param _tokenId uint256 ID of the token to be removed from the tokens list of the given address
+*/
+function removeToken(address _from, uint256 _tokenId) private {
+  require(ownerOf(_tokenId) == _from);
+
+  uint256 lastTokenIndex = balanceOf(_from).sub(1);
+  uint256 lastToken = ownedTokens[_from][lastTokenIndex];
+
+  tokenOwner[_tokenId] = 0;
+  delete ownedTokens[_from][_tokenId]
+  totalTokens = totalTokens.sub(1);
+}
+
 
 /**
  * @dev Internal function to add a token ID to the list of a given address
@@ -92,7 +111,10 @@ function _mint(address _to, uint256 _tokenId) internal {
  function addToken(address _to, uint256 _tokenId) private {
    require(tokenOwner[_tokenId] == address(0));
    tokenOwner[_tokenId] = _to;
-   uint256 length = balanceOf(_to);
-   ownedTokens[_to].push(_tokenId);
+   //ownedTokens[_to].push(_tokenId);
+   ownedTokens[_to][_tokenId] = true;
    totalTokens = totalTokens.add(1);
  }
+
+
+}
