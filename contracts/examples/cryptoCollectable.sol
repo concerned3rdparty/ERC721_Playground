@@ -86,7 +86,7 @@ function _mint(address _to, uint256 _tokenId) internal {
 }
 
 /**
-* @notice Mapping in mapping is not tested 
+* @notice Mapping in mapping is not tested
 * @dev Internal function to remove a token ID from the list of a given address
 * @param _from address representing the previous owner of the given token ID
 * @param _tokenId uint256 ID of the token to be removed from the tokens list of the given address

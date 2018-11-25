@@ -8,6 +8,8 @@ contract Pausable is Ownable {
   event Pause();
   event Unpause();
 
+
+  //Keeps track whether the contract is paused. When that is true, most actions are blocked
   bool public paused = false;
 
 
