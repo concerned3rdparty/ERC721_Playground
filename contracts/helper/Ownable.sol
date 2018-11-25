@@ -11,7 +11,7 @@ contract Ownable {
 
 
   event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
-
+  event OwnershipRenounced(address indexed previousOwner);
 
   /**
    * @dev The Ownable constructor sets the original `owner` of the contract to the sender
@@ -40,5 +40,13 @@ contract Ownable {
     OwnershipTransferred(owner, newOwner);
     owner = newOwner;
   }
+
+  /**
+ * @dev Allows the current owner to relinquish control of the contract.
+ */
+function renounceOwnership() public onlyOwner {
+  emit OwnershipRenounced(owner);
+  owner = address(0);
+}
 
 }
