@@ -4,13 +4,17 @@ import "../helper/ERC721.sol";
 import "../helper/Ownable.sol";
 import "../helper/util/SafeMath.sol";
 
-contract Collectable is ERC721 {
+contract CollectableToken is ERC721 {
 
 
   using SafeMath for uint256;
   using SafeMath for uint32;
   using SafeMath16 for uint16;
   using AddressUtils for address;
+
+  /// @notice Name and symbol of the non fungible token, as defined in ERC721.
+  string public constant name = ;
+  string public constant symbol = ;
 
   // Total amount of tokens
   uint256 private totalTokens;
@@ -27,6 +31,16 @@ contract Collectable is ERC721 {
   mapping(uint256 => string) internal tokenURIs;
 
   mapping (uint => address) collectableApprovals;
+
+
+  /**
+   * @dev Constructor function
+   */
+  constructor(string _name, string _symbol) public {
+    name = _name;
+    symbol = _symbol;
+
+  }
 
   function balanceOf(address _owner) public view returns (uint256 _balance) {
     //return ownerCollectableCount state

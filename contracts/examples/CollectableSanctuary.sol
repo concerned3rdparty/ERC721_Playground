@@ -12,7 +12,8 @@ contract SanctuaryInterface {
 /* collectable identity generator*/
 contract CollectableGenerator is Pausable, SanctuaryInterface {
 
-    CryptoCollectable public coreContract;
+    //todo core contract is not implemented
+    CryptoCollectableCore public coreContract;
 
     // / @dev simply a boolean to indicate this is the contract we expect to be
     function isSanctuary() public pure returns (bool){
@@ -28,7 +29,7 @@ contract CollectableGenerator is Pausable, SanctuaryInterface {
     {
         //only core contract can call this method
         require(msg.sender == address(coreContract));
-      
+
         return _generateIdentity(_genes, _level);
     }
 
