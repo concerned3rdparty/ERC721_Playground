@@ -1,3 +1,7 @@
+pragma solidity ^0.4.18;
+
+import "../helper/Pausable.sol";
+
 contract SanctuaryInterface {
     /// @dev simply a boolean to indicate this is the contract we expect to be
     function isSanctuary() public pure returns (bool);
