@@ -1,10 +1,10 @@
-pragma solidity ^0.4.18;
+pragma solidity ^0.5.0;
 
 
 
 /**
  * @title ERC721 interface
- * @dev
+ * @dev -
  */
 contract ERC721 {
   event Transfer(address indexed _from, address indexed _to, uint256 _tokenId);
